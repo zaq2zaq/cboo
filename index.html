@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>商家工作台 · 楚宝女鞋</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 项目样式 (强制刷新CDN缓存，使用最新提交) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zaq2zaq/cb@main/cbcss.css?t=20250412">
+    <!-- Vue 3 导入映射 -->
+    <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+            }
+        }
+    </script>
+    <style>
+        /* 后备基础样式，防止CDN短暂失效 */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f2f5f9; margin: 0; padding: 0; }
+        #app { width: 100%; height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak></div>
+    <!-- 加载应用入口，强制刷新CDN -->
+    <script type="module">
+        // 使用带时间戳的CDN链接强制绕过缓存
+        import { mountApp } from 'https://cdn.jsdelivr.net/gh/zaq2zaq/cb@main/app.js?t=' + Date.now();
+        mountApp('#app');
+    </script>
+    <!-- 备选方案：如果CDN加载失败，提示用户 -->
+    <script type="module">
+        window.addEventListener('error', (e) => {
+            if (e.message.includes('Failed to fetch dynamically imported module')) {
+                document.getElementById('app').innerHTML = '<div style="padding:40px;text-align:center;color:#666;">⚠️ 资源加载失败，请刷新页面或检查网络。</div>';
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
