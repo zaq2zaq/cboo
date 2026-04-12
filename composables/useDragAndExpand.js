@@ -111,7 +111,9 @@ export function useDragAndExpand(searchActive) {
     const forceCollapse = () => {
         if (isExpanded.value) {
             isExpanded.value = false;
-            setMarginFromOffset(0);
+            //setMarginFromOffset(0);
+            dragOffset.value = 0;
+            blueCardMarginTop.value = 0;
             computeAndSetPosition();
         }
         isDragging.value = false;
