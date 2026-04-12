@@ -1,0 +1,746 @@
+/* ===== 楚宝女鞋商家工作台 样式表 ===== */
+/* 版本：v1.1 - 修复搜索激活时列表不可见，搜索面板底部直角 */
+
+:root {
+    /* 主色系 */
+    --primary: #2c3e50;
+    --primary-light: #3e5a70;
+    --accent: #e67e22;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+
+    /* 背景色 */
+    --bg-page: #f5f7fa;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #f8f9fc;
+
+    /* 文字色 */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-tertiary: #94a3b8;
+    --text-inverse: #ffffff;
+
+    /* 边框 */
+    --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    /* 字体大小（统一变量） */
+    --text-xs: 0.75rem;    /* 12px */
+    --text-sm: 0.875rem;   /* 14px */
+    --text-base: 1rem;     /* 16px */
+    --text-lg: 1.125rem;   /* 18px */
+    --text-xl: 1.25rem;    /* 20px */
+    --text-2xl: 1.5rem;    /* 24px */
+
+    /* 间距 */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+
+    /* 圆角 */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+
+    /* 阴影 */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== 全局重置 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* 防止整体滚动，内部容器控制滚动 */
+    height: 100vh;
+    width: 100vw;
+}
+
+#app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 隐藏 Vue 未编译时的模板内容 */
+[v-cloak] {
+    display: none;
+}
+
+/* ===== 通用组件样式 ===== */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    color: inherit;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* 卡片样式 */
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-4);
+    border: 1px solid var(--border-light);
+}
+
+/* ===== 头部 AppHeader ===== */
+.app-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-4);
+    height: 60px;
+    background-color: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.app-header h1 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.header-btn {
+    color: white;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+    font-size: var(--text-lg);
+}
+
+.header-btn:hover {
+    opacity: 1;
+}
+
+/* ===== 主内容区 ===== */
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--space-4) var(--space-4) 0;
+    gap: var(--space-4);
+}
+
+/* ===== KPI 看板行 ===== */
+.kpi-row {
+    flex-shrink: 0;
+    display: flex;
+    gap: var(--space-4);
+    transition: all 0.2s;
+}
+
+.kpi-card {
+    flex: 1;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    border: 1px solid var(--border-light);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background-color: rgba(230, 126, 34, 0.1);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.kpi-content h3 {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.kpi-content .kpi-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ===== 拖拽面板（公告/待办） ===== */
+.drag-panel {
+    flex-shrink: 0;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-hover);
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    user-select: none;
+}
+
+.drag-handle-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: var(--text-sm);
+}
+
+.drag-handle i {
+    transition: transform 0.2s;
+}
+
+.drag-panel.expanded .drag-handle i {
+    transform: rotate(90deg);
+}
+
+.drag-content {
+    padding: var(--space-4);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* 搜索激活时隐藏拖拽把手（通过类控制） */
+.drag-panel.search-active .drag-handle {
+    display: none;
+}
+
+/* ===== 搜索面板 ===== */
+.search-panel {
+    flex-shrink: 0;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0; /* 下边角直角 */
+    box-shadow: var(--shadow-md);
+    padding: var(--space-4);
+    margin-bottom: 0; /* 下边距为0 */
+    transition: all 0.3s;
+    border: 1px solid var(--border-light);
+    border-bottom: none; /* 与商品列表无缝连接 */
+}
+
+.search-bar {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.search-input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--bg-page);
+    border-radius: var(--radius-md);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--border-color);
+}
+
+.search-input-wrapper i {
+    color: var(--text-tertiary);
+    margin-right: var(--space-2);
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: var(--space-3) 0;
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.search-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-page);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* 筛选排序栏 */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.filter-tab {
+    padding: var(--space-1) 0;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.filter-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    font-weight: 500;
+}
+
+.sort-options {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.sort-item {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.sort-item.active {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* 历史记录横向滚动 */
+.search-history {
+    margin-top: var(--space-3);
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: var(--space-2);
+    display: flex;
+    gap: var(--space-2);
+}
+
+.history-tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--bg-page);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+}
+
+.history-tag i {
+    margin-right: 4px;
+    font-size: 10px;
+}
+
+/* ===== 商品列表容器 ===== */
+.product-list-container {
+    flex: 1;              /* 关键：自动填充剩余高度 */
+    min-height: 0;        /* 防止flex子项溢出 */
+    overflow-y: auto;
+    background: var(--bg-surface);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    border-top: none;     /* 与搜索面板下边无缝衔接 */
+    padding: 0;
+    transition: border-radius 0.3s;
+}
+
+/* 商品卡片 */
+.product-card {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    background: white;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.product-card:active {
+    background: var(--bg-hover);
+}
+
+.product-info {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.product-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    background: var(--bg-page);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 24px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.product-sku {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+}
+
+.product-tags {
+    display: flex;
+    gap: 4px;
+    margin: 4px 0;
+}
+
+.tag {
+    background: var(--bg-page);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}
+
+.product-stock-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: var(--text-sm);
+}
+
+.stock-badge {
+    color: var(--text-secondary);
+}
+
+.stock-value {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.price-info {
+    text-align: right;
+}
+
+.cost-price {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+}
+
+.sale-price {
+    font-weight: 700;
+    color: var(--danger);
+}
+
+/* 尺码展开区 */
+.size-grid {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--border-light);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--space-2);
+}
+
+.size-item {
+    background: var(--bg-page);
+    padding: var(--space-2) var(--space-1);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.size-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}
+
+.size-stock {
+    font-weight: 600;
+    font-size: var(--text-sm);
+}
+
+/* 滑动操作样式 */
+.swipe-actions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+}
+
+.swipe-btn {
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--text-sm);
+    gap: 4px;
+}
+
+.swipe-btn.in {
+    background-color: var(--success);
+}
+
+.swipe-btn.out {
+    background-color: var(--accent);
+}
+
+/* 列表底部提示 */
+.list-footer {
+    padding: var(--space-6);
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: var(--text-sm);
+}
+
+/* ===== 搜索激活时的状态调整 ===== */
+/* KPI 行隐藏 */
+.kpi-row.search-active {
+    display: none;
+}
+
+/* 拖拽面板把手隐藏（通过父级类控制） */
+.drag-panel.search-active .drag-handle {
+    display: none;
+}
+
+/* 拖拽面板内容默认隐藏，展开时才显示，但搜索激活时把手消失不影响内容（内容可能已被折叠） */
+/* 注意：搜索激活时，拖拽面板如果是展开状态，内容依然可见，但把手消失，商品列表仍能正常显示剩余空间 */
+
+/* 搜索面板激活时稍微调整圆角（下边已为直角） */
+.search-panel.search-active {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    margin-bottom: 0;
+    box-shadow: var(--shadow-md);
+}
+
+/* 商品列表在搜索激活时上边与搜索面板紧贴，圆角处理 */
+.product-list-container.search-active {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    border-top: none;
+}
+
+/* ===== 模态框通用样式（配箱、出入库等） ===== */
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    width: 100%;
+    max-width: 500px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: var(--space-4);
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: var(--text-lg);
+}
+
+.modal-close {
+    font-size: 20px;
+    color: var(--text-tertiary);
+}
+
+/* 表单元素 */
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    margin-bottom: var(--space-1);
+    color: var(--text-secondary);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-page);
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+}
+
+/* 按钮 */
+.btn {
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--primary-light);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* 配箱方案卡片 */
+.box-scheme-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+/* 数量调整器 */
+.quantity-stepper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.stepper-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: var(--bg-page);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper-input {
+    width: 60px;
+    text-align: center;
+    padding: var(--space-2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+/* 自由格式解析输入区 */
+.bulk-input-area {
+    background: var(--bg-page);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    font-family: monospace;
+    border: 1px solid var(--border-color);
+}
+
+/* 工具类 */
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-warning { color: var(--warning); }
+.mt-2 { margin-top: var(--space-2); }
+.mb-2 { margin-bottom: var(--space-2); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: var(--space-2); }
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .app-main {
+        padding: var(--space-3) var(--space-3) 0;
+    }
+    .kpi-card {
+        padding: var(--space-3);
+    }
+    .kpi-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
