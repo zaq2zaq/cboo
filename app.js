@@ -38,7 +38,7 @@ const App = {
             await nextTick(); dragExpand.computeAndSetPosition();
         }
         productData.loadProducts = loadProducts;
-        
+        /*
         function toggleSearch() {
             if (!modalState.searchActive.value) {
                 // 如果面板处于展开状态，先收起面板
@@ -53,7 +53,17 @@ const App = {
                 // 激活后立即更新搜索面板高度，确保位置正确
                 nextTick(() => dragExpand.updateSearchPanelHeight());
             }
+        }*/
+        function toggleSearch() {
+            if (!modalState.searchActive.value) {
+                dragExpand.forceCollapse();  // 强制收起，清除展开状态
+            }
+            modalState.searchActive.value = !modalState.searchActive.value;
+            if (!modalState.searchActive.value) {
+                productData.resetSearch();
+            }
         }
+        
         function closeSearch() { 
             modalState.searchActive.value = false; 
             productData.resetSearch(); 
