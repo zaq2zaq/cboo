@@ -345,11 +345,8 @@ html, body { width: 100%; height: 100%; background-color: var(--bg-page); font-f
 .history-tag { background: var(--bg-input); padding: 6px 14px; border-radius: 30px; font-size: 13px; color: var(--text-secondary); white-space: nowrap; cursor: pointer; flex-shrink: 0; }
 .history-footer { display: flex; justify-content: flex-end; margin-top: 8px; }
 .clear-history { color: var(--primary); font-size: 13px; cursor: pointer; }
-/* ========== 修复搜索激活时拖拽手柄可见性 ========== */
+
+/* 搜索激活时完全隐藏拖拽手柄，避免点击区域露出 */
 .drag-handle.search-mode {
-    opacity: 0.4;
-    pointer-events: auto;
-}
-.drag-handle.search-mode .click-area {
-    pointer-events: auto;
+    display: none;
 }
